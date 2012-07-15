@@ -37,3 +37,7 @@ simply able to check out the code and import it into your IDE.
 To make changes to the web interface, you will need to download the h5bp-ant-script into the
 `QRemote Web/build` folder. Once any changes have been made, run the ant build, and then copy
 the resulting files from the `QRemote Web/publish` folder into the `QRemote/assets/htdocs` folder.
+
+Contact
+-------
+Additional information available on http://bliny.net
