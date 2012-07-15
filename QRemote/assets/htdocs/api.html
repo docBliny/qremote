@@ -1,0 +1,695 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=en><![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8" lang=en><![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9" lang=en><![endif]-->
+<!--[if gt IE 8]><!--> <html class=no-js lang=en> <!--<![endif]-->
+<head>
+    <meta charset=utf-8>
+    <meta http-equiv=X-UA-Compatible content="IE=edge,chrome=1">
+
+    <title>QRemote API</title>
+
+    <meta name=viewport content="width=device-width, initial-scale=1.0">
+    <meta name=description content="Remote control your Nexus Q using a RESTful API">
+    <meta name=author content="Tomi Blinnikka">
+
+    <!--[if IE 7]><link rel=stylesheet href="css/font-awesome-ie7.css"><![endif]-->
+    <link rel=stylesheet href='css/06edcb4.css'>
+
+    <script src="js/vendor/modernizr-2.5.3.min.js"></script>
+
+    
+    <link rel="shortcut icon" href="img/favicon.ico">
+    <link rel=apple-touch-icon-precomposed sizes=144x144 href="img/apple-touch-icon-144-precomposed.png">
+    <link rel=apple-touch-icon-precomposed sizes=114x114 href="img/apple-touch-icon-114-precomposed.png">
+    <link rel=apple-touch-icon-precomposed sizes=72x72 href="img/apple-touch-icon-72-precomposed.png">
+    <link rel=apple-touch-icon-precomposed href="img/apple-touch-icon-57-precomposed.png">
+  </head>
+  <body class=api>
+    
+    <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
+
+    <header class=navbar>
+      <div class=navbar-inner>
+        <div class=container>
+          <span class=brand><img src="img/QRemote24.png"/> QRemote API</span>
+          <ul id=mainNav class=nav>
+            <li class=active><a href="#home" data-toggle=tab>Playback</a></li>
+            <li><a href="#speak" data-toggle=tab>Speak</a></li>
+            <li><a href="#led" data-toggle=tab>Lights</a></li>
+            <li><a href="#general" data-toggle=tab>General</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    </header>
+
+    
+    <div role=main class=tab-content>
+
+      <div id=home class="tab-pane active">
+        <div class=span8>
+          <h1>Media Playback Settings and Control</h1>
+          <p>You can retrieve information about and control media playback by manipulating objects under the <code>/media/controls</code>, 
+            <code>/media/settings/</code>, and <code>/media/playlist/current/items/current</code> resources.</p>
+
+          
+          <h2><i>controls</i> Resource</h2>
+          <p>The <i>controls</i> resource contains information about the current playback state.</p>
+
+          <h3>URI</h3>
+          <p><code>/api/V1/media/controls</code></p>
+
+          <h3>Supported Methods</h3>
+          <ul>
+            <li><code>GET</code>: Gets the current playback status.</li>
+            <li><code>PUT</code>: Sets the current playback status.</li>
+          </ul>
+
+          <h3>Resource Representations</h3>
+          <p><pre>
+{
+    "status": "stop"
+}</pre></p>
+
+          <table class="table table-bordered table-striped">
+            <thead>
+              <th>Property Name</th>
+              <th>Data Type</th>
+              <th>Description</th>
+            </thead>
+            <tbody>
+              <tr>
+                <td>status</td>
+                <td>string</td>
+                <td>Identifies the playback state. Valid values are: <code>unknown</code>, <code>stop</code>, <code>play</code>, and <code>pause</code>.</td>
+              </tr>
+            </tbody>
+          </table>
+
+          
+          <hr/>
+          <h2><i>settings/repeat</i> Resource</h2>
+          <p>The <i>settings/repeat</i> resource contains information about the current repeat mode.</p>
+
+          <h3>URI</h3>
+          <p><code>/api/V1/media/settings/repeat</code></p>
+
+          <h3>Supported Methods</h3>
+          <ul>
+            <li><code>GET</code>: Gets the current repeat mode.</li>
+          </ul>
+
+          <h3>Resource Representations</h3>
+          <p><pre>
+{
+    "value": "single"
+}</pre></p>
+
+          <table class="table table-bordered table-striped">
+            <thead>
+              <th>Property Name</th>
+              <th>Data Type</th>
+              <th>Description</th>
+            </thead>
+            <tbody>
+              <tr>
+                <td>value</td>
+                <td>string</td>
+                <td>Identifies the repeat mode. Valid values are: <code>unknown</code>, <code>off</code>, <code>single</code>, and <code>all</code>.</td>
+              </tr>
+            </tbody>
+          </table>
+
+          
+          <hr/>
+          <h2><i>settings/shuffle</i> Resource</h2>
+          <p>The <i>settings/shuffle</i> resource contains information about the current shuffle mode.</p>
+
+          <h3>URI</h3>
+          <p><code>/api/V1/media/settings/shuffle</code></p>
+
+          <h3>Supported Methods</h3>
+          <ul>
+            <li><code>GET</code>: Gets the current shuffle mode.</li>
+          </ul>
+
+          <h3>Resource Representations</h3>
+          <p><pre>
+{
+    "value": "all"
+}</pre></p>
+
+          <table class="table table-bordered table-striped">
+            <thead>
+              <th>Property Name</th>
+              <th>Data Type</th>
+              <th>Description</th>
+            </thead>
+            <tbody>
+              <tr>
+                <td>value</td>
+                <td>string</td>
+                <td>Identifies the shuffle mode. Valid values are: <code>unknown</code>, <code>off</code>, and <code>all</code>.</td>
+              </tr>
+            </tbody>
+          </table>
+
+          
+          <hr/>
+          <h2><i>settings/mute</i> Resource</h2>
+          <p>The <i>settings/mute</i> resource contains information about the current mute mode.</p>
+
+          <h3>URI</h3>
+          <p><code>/api/V1/media/settings/mute</code></p>
+
+          <h3>Supported Methods</h3>
+          <ul>
+            <li><code>GET</code>: Gets the current mute mode.</li>
+            <li><code>PUT</code>: Sets the current mute mode.</li>
+          </ul>
+
+          <h3>Resource Representations</h3>
+          <p><pre>
+{
+    "value": "on"
+}</pre></p>
+
+          <table class="table table-bordered table-striped">
+            <thead>
+              <th>Property Name</th>
+              <th>Data Type</th>
+              <th>Description</th>
+            </thead>
+            <tbody>
+              <tr>
+                <td>value</td>
+                <td>string</td>
+                <td>Identifies the mute mode. Valid values are: <code>unknown</code>, <code>off</code>, and <code>on</code>.</td>
+              </tr>
+            </tbody>
+          </table>
+
+          
+          <hr/>
+          <h2><i>settings/volume</i> Resource</h2>
+          <p>The <i>settings/volume</i> resource contains information about the current volume level.</p>
+
+          <h3>URI</h3>
+          <p><code>/api/V1/media/settings/volume</code></p>
+
+          <h3>Supported Methods</h3>
+          <ul>
+            <li><code>GET</code>: Gets the current volume level.</li>
+            <li><code>PUT</code>: Sets the current volume level.</li>
+          </ul>
+
+          <h3>Resource Representations</h3>
+          <p><pre>
+{
+    "value": 75
+}</pre></p>
+
+          <table class="table table-bordered table-striped">
+            <thead>
+              <th>Property Name</th>
+              <th>Data Type</th>
+              <th>Description</th>
+            </thead>
+            <tbody>
+              <tr>
+                <td>value</td>
+                <td>integer</td>
+                <td>The volume level. Valid values are: <code>unknown</code> (read only), an integer between <code>0</code> and <code>100</code>.</td>
+              </tr>
+            </tbody>
+          </table>
+
+          
+          <h2><i>playlist</i> Resources</h2>
+          <p>The <i>playlist</i> sub-resources contain information about the currently playing item.</p>
+
+          <h3>URI</h3>
+          <p><code>/api/V1/media/playlist/current/items/current</code></p>
+
+          <h3>Supported Methods</h3>
+          <ul>
+            <li><code>GET</code>: Gets information about the currently playing item.</li>
+            <li><code>POST</code>: Sets the currently playing item. Currently only the pseudo-URIs <code>urn:media:item:previous</code> 
+              and <code>urn:media:item:next</code> are supported</li>
+          </ul>
+
+          <h3>Resource Representations</h3>
+          <p><pre>
+{
+    "artistName": "Will Atkinson presents Darkboy",
+    "uri": "urn:google:play:164364289",
+    "titleName": "Darker Shades Of Black (Blazer Radio Edit)",
+    "albumName": "DJ Box - July 2012"
+}</pre></p>
+
+          <p>To navigate to the next item in the playlist, <code>POST</code> the following object:
+            <pre>
+{
+    "uri": "urn:media:item:next"
+}</pre></p>
+
+          <table class="table table-bordered table-striped">
+            <thead>
+              <th>Property Name</th>
+              <th>Data Type</th>
+              <th>Description</th>
+            </thead>
+            <tbody>
+              <tr>
+                <td>albumName</td>
+                <td>string</td>
+                <td>The name of the album.</td>
+              </tr>
+              <tr>
+                <td>artistName</td>
+                <td>string</td>
+                <td>The name of the artist.</td>
+              </tr>
+              <tr>
+                <td>titleName</td>
+                <td>string</td>
+                <td>The title of the currently playing item.</td>
+              </tr>
+              <tr>
+                <td>uri</td>
+                <td>string</td>
+                <td>The URI of the currently playing item.</td>
+              </tr>
+            </tbody>
+          </table>
+
+        </div>
+      </div>
+
+      <div id=speak class=tab-pane>
+        <div class=span8>
+          <h1>Text-to-Speech</h1>
+          <p>You can adjust speech settings and request text to be spoken using the <code>/speak</code>, and
+            <code>/speak/sentence</code> resources.</p>
+
+          
+          <h2><i>speak</i> Resource</h2>
+          <p>The <i>speak</i> resource controls speech options.</p>
+
+          <h3>URI</h3>
+          <p><code>/api/V1/speak</code></p>
+
+          <h3>Supported Methods</h3>
+          <ul>
+            <li><code>PUT</code>: Sets the current speech options.</li>
+          </ul>
+
+          <h3>Resource Representations</h3>
+          <p><pre>
+{
+    "pitch": 1.0,
+    "rate" : 1.5
+}</pre></p>
+
+          <table class="table table-bordered table-striped">
+            <thead>
+              <th>Property Name</th>
+              <th>Data Type</th>
+              <th>Description</th>
+            </thead>
+            <tbody>
+              <tr>
+                <td>pitch</td>
+                <td>float</td>
+                <td>Sets the pitch. A value of <code>1.0</code> means the normal pitch. Greater values increase the pitch.</td>
+              </tr>
+              <tr>
+                <td>rate</td>
+                <td>float</td>
+                <td>Sets the speech rate. A value of <code>1.0</code> means the normal rate. Lower values slow the speed, higher values
+                  increase the speed. A value of <code>0.5</code> is half the normal speed and <code>2.0</code> is twice the speed.</td>
+              </tr>
+            </tbody>
+          </table>
+
+          
+          <hr/>
+          <h2><i>speak/sentence</i> Resource</h2>
+          <p>The <i>sentence</i> resource allows you to request a sentence to be spoken.</p>
+
+          <h3>URI</h3>
+          <p><code>/api/V1/speak/sentence</code></p>
+
+          <h3>Supported Methods</h3>
+          <ul>
+            <li><code>PUT</code>: Sets the sentence to be spoken.</li>
+          </ul>
+
+          <h3>Resource Representations</h3>
+          <p><pre>
+{
+    "text": "Hello world. This is your future robot overlord speaking."
+}</pre></p>
+
+          <table class="table table-bordered table-striped">
+            <thead>
+              <th>Property Name</th>
+              <th>Data Type</th>
+              <th>Description</th>
+            </thead>
+            <tbody>
+              <tr>
+                <td>text</td>
+                <td>string</td>
+                <td>The text to speak.</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <hr/>
+          <h2>Errors</h2>
+          <p><ul><li><code>503</code>: Text-to-Speech service is not available.</li></ul></p>
+
+        </div>
+      </div>
+
+      <div id=led class=tab-pane>
+        <div class=span8>
+          <h1>LEDs</h1>
+          <p>You can request animations and set the color values for LEDs using the <code>/led/</code> sub-resources.</p>
+
+          
+          <h2><i>animation</i> Resource</h2>
+          <p>The <i>animation</i> resource controls LED animations.</p>
+
+          <h3>URI</h3>
+          <p><code>/api/V1/led/animation</code></p>
+
+          <h3>Supported Methods</h3>
+          <ul>
+            <li><code>PUT</code>: Sets the current animation.</li>
+          </ul>
+
+          <h3>Resource Representations</h3>
+          <p>To set a built-in animation:
+            <pre>
+{
+    "type": "builtIn",
+    "id": 1
+}</pre></p>
+
+          <p>To set a custom animation:
+            <pre>
+{
+    "type": "custom",
+    "fields": [
+      { "ledId": 1000, "red": 255, "green": 0, "blue": 0, "start": 250 },
+      { "ledId": 1000, "red": 0, "green": 0, "blue": 0, "start": 500 }
+    ],
+    "repeat": true
+}</pre></p>
+
+          <table class="table table-bordered table-striped">
+            <thead>
+              <th>Property Name</th>
+              <th>Data Type</th>
+              <th>Description</th>
+            </thead>
+            <tbody>
+              <tr>
+                <td>type</td>
+                <td>string</td>
+                <td>Sets the animation type. Valid values are <code>builtIn</code> (note camelCasing) and <code>custom</code>.</td>
+              </tr>
+              <tr>
+                <td>id</td>
+                <td>integer</td>
+                <td>The built-in animation ID to start. Valid values are between <code>0</code> and <code>1</code>. This field
+                  is only present for <code>builtIn</code> animations.</td>
+              </tr>
+              <tr>
+                <td>fields</td>
+                <td>array</td>
+                <td>An array of LED objects for <code>custom</code> animations.</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h4>Field Objects</h4>
+          <table class="table table-bordered table-striped">
+            <thead>
+              <th>Property Name</th>
+              <th>Data Type</th>
+              <th>Description</th>
+            </thead>
+            <tbody>
+              <tr>
+                <td>ledId</td>
+                <td>integer</td>
+                <td>Sets the LED ID. Valid values are between <code>0</code> and <code>32</code> for individual LEDs, 
+                  <code>1000</code> for all LEDs, and <code>1001</code> for the status (mute) LED.</td>
+              </tr>
+              <tr>
+                <td>red</td>
+                <td>integer</td>
+                <td>The red color value for the LED. Valid values are between <code>0</code> and <code>255</code>.</td>
+              </tr>
+              <tr>
+                <td>green</td>
+                <td>integer</td>
+                <td>The green color value for the LED. Valid values are between <code>0</code> and <code>255</code>.</td>
+              </tr>
+              <tr>
+                <td>blue</td>
+                <td>integer</td>
+                <td>The blue color value for the LED. Valid values are between <code>0</code> and <code>255</code>.</td>
+              </tr>
+              <tr>
+                <td>start</td>
+                <td>integer</td>
+                <td>The animation field start time in milliseconds.</td>
+              </tr>
+            </tbody>
+          </table>
+
+          
+          <hr/>
+          <h2><i>leds/all</i> Resource</h2>
+          <p>The <i>leds/all</i> resource allows setting all perimeter LED values in one call.</p>
+
+          <h3>URI</h3>
+          <p><code>/api/V1/led/leds/all</code></p>
+
+          <h3>Supported Methods</h3>
+          <ul>
+            <li><code>PUT</code>: Sets the given color values for all perimeter LEDs.</li>
+          </ul>
+
+          <h2><i>leds/status</i> Resource</h2>
+          <p>The <i>leds/status</i> resource allows setting the status (mute) LED color.</p>
+
+          <h3>URI</h3>
+          <p><code>/api/V1/led/leds/status</code></p>
+
+          <h3>Supported Methods</h3>
+          <ul>
+            <li><code>PUT</code>: Sets the given color values for the status (mute) LED.</li>
+          </ul>
+
+          <h2><i>leds/[ledId]</i> Resource</h2>
+          <p>The <i>leds/[ledId]</i> resource allows setting a specific LED color.</p>
+
+          <h3>URI</h3>
+          <p><code>/api/V1/led/leds/[index]</code>, where <code>[index]</code> is a value between <code>0</code> and <code>32</code>.</p>
+
+          <h3>Supported Methods</h3>
+          <ul>
+            <li><code>PUT</code>: Sets the given color values for the status (mute) LED.</li>
+          </ul>
+
+          <h2>Resource Representations</h2>
+          <p><pre>
+{
+      "red": 255,
+      "green": 255, 
+      "blue": 0
+}</pre></p>
+
+          <table class="table table-bordered table-striped">
+            <thead>
+              <th>Property Name</th>
+              <th>Data Type</th>
+              <th>Description</th>
+            </thead>
+            <tbody>
+              <tr>
+                <td>red</td>
+                <td>integer</td>
+                <td>The red color value for the LEDs. Valid values are between <code>0</code> and <code>255</code>.</td>
+              </tr>
+              <tr>
+                <td>green</td>
+                <td>integer</td>
+                <td>The green color value for the LEDs. Valid values are between <code>0</code> and <code>255</code>.</td>
+              </tr>
+              <tr>
+                <td>blue</td>
+                <td>integer</td>
+                <td>The blue color value for the LEDs. Valid values are between <code>0</code> and <code>255</code>.</td>
+              </tr>
+            </tbody>
+          </table>
+
+          
+          <hr/>
+          <h2><i>leds</i> Resource</h2>
+          <p>The <i>leds</i> resource allows you to set a range of LEDs to a set of specific colors.</p>
+
+          <h3>URI</h3>
+          <p><code>/api/V1/led/leds</code></p>
+
+          <h3>Supported Methods</h3>
+          <ul>
+            <li><code>PUT</code>: Sets the given range to the specified color values.</li>
+          </ul>
+
+          <h3>Resource Representations</h3>
+          <p><pre>
+{
+    "start": 0,
+    "count": 3,
+    "leds": [
+      { "red": 255, "green": 0, "blue": 0 },
+      { "red": 0, "green": 255, "blue": 0 },
+      { "red": 0, "green": 0, "blue": 255 }
+    ]
+}</pre></p>
+
+          <table class="table table-bordered table-striped">
+            <thead>
+              <th>Property Name</th>
+              <th>Data Type</th>
+              <th>Description</th>
+            </thead>
+            <tbody>
+              <tr>
+                <td>start</td>
+                <td>integer</td>
+                <td>The start LED ID. A value between <code>0</code> and <code>32</code>.</td>
+              </tr>
+              <tr>
+                <td>count</td>
+                <td>integer</td>
+                <td>The number of sequential LEDs to to modify. <code>start</code> plus <code>count</code> must be equal to or less than <code>32</code>.</td>
+              </tr>
+              <tr>
+                <td>leds</td>
+                <td>array</td>
+                <td>An array of color objects for each LED in the range. The array must contain <code>count</code> entries.</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h4>Leds Objects</h4>
+          <table class="table table-bordered table-striped">
+            <thead>
+              <th>Property Name</th>
+              <th>Data Type</th>
+              <th>Description</th>
+            </thead>
+            <tbody>
+              <tr>
+                <td>red</td>
+                <td>integer</td>
+                <td>The red color value for the LED. Valid values are between <code>0</code> and <code>255</code>.</td>
+              </tr>
+              <tr>
+                <td>green</td>
+                <td>integer</td>
+                <td>The green color value for the LED. Valid values are between <code>0</code> and <code>255</code>.</td>
+              </tr>
+              <tr>
+                <td>blue</td>
+                <td>integer</td>
+                <td>The blue color value for the LED. Valid values are between <code>0</code> and <code>255</code>.</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <hr/>
+          <h2>Errors</h2>
+          <p><ul><li><code>503</code>: LED service is not available.</li></ul></p>
+
+        </div>
+      </div>
+
+      <div id=general class=tab-pane>
+        <div class=span8>
+          <h1>General API Information</h1>
+          <p>This page contains information that applies to all API services.</p>
+
+          <h2>Cross Origin/Domain Access</h2>
+          <p>The API specifies full access for all domains using the CORS standard for modern browsers and a <code>crossdomain.xml</code> file
+            for Flash and Silverlight. The <code>OPTIONS</code> method will return the appropriate headers required for cross-origin access.</p>
+
+          <h2>HTTP Method Overrides</h2>
+          <p>The API supports HTTP method overrides for all calls using the <code>X-HTTP-Method-Override</code> header. This is convenient if
+            the client is unable to set a specific method, such as <code>PUT</code>.</p>
+
+          <h2>Errors</h2>
+          <p>If an API call encounters an error, a JSON object containing information about the error will be returned
+            along with the corresponding HTTP status code indicating the error type.</p>
+
+          <h3>Error Response Example</h3>
+          <p><pre>
+{
+    "error": {
+        "errors": [{
+            "message": "Invalid value '4' for field 'count'.",
+            "domain": "global",
+            "reason": "badRequest"
+        }]
+    }
+}</pre>
+          </p>
+
+          <h3>Error Response Codes</h3>
+          <p>
+            <ul>
+              <li><code>400</code>: There was an error in the request. This is often due to a missing field or malformed JSON data.</li>
+              <li><code>404</code>: Specified resource was not found.</li>
+              <li><code>405</code>: The specified HTTP method is not allowed for the given resource.</li>
+              <li><code>503</code>: The resource is currently unavailable.</li>
+            </ul>
+          </p>
+        </div>
+      </div>
+
+    
+    </div>
+
+    
+    
+    <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.7.2.min.js"><\/script>')</script>
+
+    
+    <script src="js/plugins.js"></script>
+    <script src="js/vendor/bootstrap.min.js"></script>
+    
+
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-33214438-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+  </body>
+</html>

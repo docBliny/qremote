@@ -1,0 +1,197 @@
+<!doctype html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>QRemote</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Remote control your Nexus Q">
+    <meta name="author" content="Tomi Blinnikka">
+
+    <!--[if IE 7]>    <link rel="stylesheet" href="css/font-awesome-ie7.css"> <![endif]-->
+    <link rel="stylesheet" href="css/main.css">
+
+    <script src="js/vendor/modernizr-2.5.3.min.js"></script>
+
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="img/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="img/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="img/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="img/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="img/apple-touch-icon-57-precomposed.png">
+  </head>
+  <body>
+    <!-- Prompt IE 6 users to install Chrome Frame. Remove this if you support IE 6.
+         chromium.org/developers/how-tos/chrome-frame-getting-started -->
+    <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
+
+    <header class="navbar">
+      <div class="navbar-inner">
+        <div class="container">
+          <span class="brand"><img src="img/QRemote24.png"/> QRemote</span>
+          <ul id="mainNav" class="nav">
+            <li class="active"><a href="#home" data-toggle="tab">Playback</a></li>
+            <li><a href="#speak" data-toggle="tab">Speak</a></li>
+            <li><a href="#led" data-toggle="tab">Lights</a></li>
+            <li><a href="#about" data-toggle="tab">About</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    </header>
+
+    <div id="messageContainer"></div>
+
+    <!-- BEGIN: Main -->
+    <div role="main" class="tab-content">
+
+      <div id="home" class="tab-pane active">
+        <div class="row">
+          <div class="span4">
+            <div id="messageContainer"></div>
+
+            <dl class="well dl-horizontal">
+              <dt>Title:</dt>
+              <dd id="titleName">&nbsp;</dd>
+              <dt>Artist:</dt>
+              <dd id="artistName">&nbsp;</dd>
+              <dt>Album:</dt>
+              <dd id="albumName">&nbsp;</dd>
+            </dl>
+          </div>
+
+          <div class="span5">
+            <div class="btn-toolbar">
+              <div class="btn-group">
+                <a id="previous" href="javascript:QRemote.setPlaylistItem('urn:media:item:previous');" class="btn" ><i class="icon-step-backward"></i></a>
+                <a id="play" class="btn" href="javascript:QRemote.setControls('play');" class="btn" ><i class="icon-play"></i></a>
+                <a id="pause" class="btn" href="javascript:QRemote.setControls('pause');" class="btn" ><i class="icon-pause"></i></a>
+                <a id="stop" class="btn" href="javascript:QRemote.setControls('stop');" class="btn" ><i class="icon-stop"></i></a>
+                <a id="next" href="javascript:QRemote.setPlaylistItem('urn:media:item:next');" class="btn"><i class="icon-step-forward"></i></a>
+              </div>
+              <div class="btn-group">
+                <button class="btn" id="mute"><i class="icon-volume-up"></i></button>
+              </div>
+              <div class="btn-group">
+                <a href="javascript:QRemote.toggleRandom();" id="shuffle" class="btn disabled"><i class="icon-random"></i></a>
+                <a href="javascript:QRemote.rotateRepeat();" id="repeat" class="btn disabled"><i class="icon-refresh"></i></a>
+              </div>
+            </div>
+            <h2>Volume</h2>
+            <div id="volume" class="volume"></div>
+            <p></p>
+          </div>
+        </div>
+      </div>
+
+      <div id="speak" class="tab-pane">
+        <div class="row">
+          <div class="span5">
+            <form onsubmit="javascript:QRemote.speak($('#sentence').attr('value'));return false;" class="form-inline">
+              <input id="sentence" type="text" placeholder="Type text to speak..."></input>
+              <button type="submit" class="btn">Speak</button>
+            </form>
+
+            <h2>Volume</h2>
+            <div id="speakVolume" class="volume"></div>
+
+            <h2>Pan</h2>
+            <div id="speakPan" class="volume"></div>
+            <p></p>
+          </div>
+        </div>
+      </div>
+
+      <div id="led" class="tab-pane">
+        <div class="row">
+          <div class="span5">
+            <h2>Animation</h2>
+            <div class="btn-toolbar">
+              <div class="btn-group">
+                <a id="ledBuiltIn" href="javascript:;" class="btn dropdown-toggle" data-toggle="dropdown">Select Built-In Animation
+                  <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a href="javascript:QRemote.setBuiltInAnimation(0)">Boot animation</a></li>
+                  <li><a href="javascript:QRemote.setBuiltInAnimation(1)">Half lit</a></li>
+                </ul>
+              </div>
+            </div>
+
+            <h2>Solid Color - Mute</h2>
+            <div class="input-prepend">
+              <span class="add-on">Color:</span><input id="statusLedColor" type="text" class="color-picker miniColors input-mini" size="6" autocomplete="on"></input>
+            </div>
+
+            <h2>Solid Color - Ring</h2>
+            <div class="input-prepend">
+              <span class="add-on">Color:</span><input id="ledColor" type="text" class="color-picker miniColors input-mini" size="6" autocomplete="on"></input>
+            </div>
+
+            <h2>Solid Color - Range</h2>
+            <form onsubmit="javascript:QRemote.setLedRange();return false;" class="form">
+              <div class="input-prepend">
+                <div id="ledRange" class="led"></div>
+                <p></p>
+                <span class="add-on">Color:</span><input id="ledRangeColor" type="text" class="color-picker miniColors input-mini" size="6" autocomplete="on"></input>
+              </div>
+              <button type="submit" class="btn">Set</button>
+            </form>
+
+          </div>
+        </div>
+      </div>
+
+      <div id="about" class="tab-pane">
+        <h2>Description</h2>
+        <p>QRemote is an Android and web application written by Tomi Blinnikka. It provides an HTTP API and web interface (you're looking at it) that allow you control the Nexus Q.</p>
+
+        <h2>Credits</h2>
+          <ul>
+            <li>Twitter Bootstrap (Template, code, etc.) - <a href="http://twitter.github.com/bootstrap" target="_blank">http://twitter.github.com/bootstrap</a></li>
+            <li>Font Awesome (Icons) - <a href="http://fortawesome.github.com/Font-Awesome" target="_blank">http://fortawesome.github.com/Font-Awesome</a></li>
+            <li>jQuery UI (Slider) - <a href="http://jqueryui.com/" target="_blank">http://jqueryui.com/</a></li>
+            <li>HTML5 Boilerplate (Optimization) - <a href="http://html5boilerplate.com/" target="_blank">http://html5boilerplate.com/</a></li>
+            <li>jQuery miniColors (Color Picker) - <a href="https://github.com/claviska/jquery-miniColors/" target="_blank">https://github.com/claviska/jquery-miniColors/</a></li>
+          </ul>
+
+        <h2>Options</h2>
+        <label class="checkbox"><input id="liveUpdate" type="checkbox" checked><a href="javascript:QRemote.updateAll()">Refresh</a> automatically</input></label>
+
+        <h2>API Information</h2>
+        <p>The <a href="/api.html">API page</a> contains details about the available REST API.</p>
+      </div>
+
+    <!-- END: Main -->
+    </div>
+
+    <!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline -->
+    <!--script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>-->
+    <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.7.2.min.js"><\/script>')</script>
+
+    <!-- scripts concatenated and minified via build script -->
+    <script src="js/plugins.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/vendor/bootstrap.min.js"></script>
+    <!-- end scripts -->
+
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-33214438-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+  </body>
+</html>
