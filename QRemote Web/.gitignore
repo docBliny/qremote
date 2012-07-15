@@ -1,0 +1,6 @@
+#Ignore original image folder
+Images/
+
+#Ignore temporary and final build files
+intermediate/
+publish/

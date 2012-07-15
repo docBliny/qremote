@@ -14,3 +14,11 @@ gen/
 
 # Local configuration file (sdk path, etc)
 local.properties
+
+#Eclipse items
+.settings/
+.classpath
+.project
+
+#Operating generated files
+Thumbs.db
